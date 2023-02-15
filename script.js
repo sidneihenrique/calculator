@@ -35,26 +35,49 @@ buttons.forEach(function(button){
             if(firstNumber === undefined){
                 firstNumber = actualNumbers
             }
+
             else {
                 secondNumber = actualNumbers
                 let result
                 firstNumber  = parseFloat(firstNumber)
                 secondNumber = parseFloat(secondNumber)
                 
-                switch(button.id){
-                    case '+' :
-                        console.log('entrei no +')
-                        return result = (firstNumber + secondNumber);
-                    case '-' :
-                        return result = (firstNumber - secondNumber);
-                    case '*' :
-                        return result = (firstNumber * secondNumber);
-                    case '/' :
-                        return result = (firstNumber / secondNumber);
-                    case '%' :
-                        return result = (firstNumber % secondNumber);
-        
+
+                if (button.id === '+'){
+                    console.log('entrei no +')
+                    result = (firstNumber + secondNumber)
                 }
+                if (button.id === '-'){
+                    result = (firstNumber - secondNumber)
+                }
+                if (button.id === '*'){
+                    result = (firstNumber * secondNumber)
+                }
+                if (button.id === '/'){
+                    result = (firstNumber / secondNumber)
+                }
+                if (button.id === '%'){
+                    result = (firstNumber % secondNumber)
+                }
+
+                // switch(button.id){
+                //     case '+' :
+                //         console.log('entrei no +')
+                //         return result = (firstNumber + secondNumber);
+                //     case '-' :
+                //         console.log('entrei no -')
+                //         return result = (firstNumber - secondNumber);
+                //     case '*' :
+                //         console.log('entrei no *')
+                //         return result = (firstNumber * secondNumber);
+                //     case '/' :
+                //         console.log('entrei no /')
+                //         return result = (firstNumber / secondNumber);
+                //     case '%' :
+                //         console.log('entrei no %')
+                //         return result = (firstNumber % secondNumber);
+        
+                // }
                 console.log('passou aqui')
                 console.log(result)
                 firstNumber = secondNumber.toString()
