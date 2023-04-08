@@ -2,23 +2,25 @@ const displayResult = document.querySelector('#result span')
 const displayCurrentCalc = document.querySelector('#current-calc')
 var currentCalc = []
 var actualNumbers = ''
-const operators = []
 var firstNumber
 var secondNumber
+var result
 
 let buttons = document.querySelectorAll('button')
 
 buttons.forEach(function(button){
     button.addEventListener('click', function(){
 
-        if(button.id === 'CE' || button.id === 'C'){
-            actualNumbers = ''
-            displayResult.innerText = actualNumbers
+        if(button.id === 'C'){
+            displayResult.innerText = ''
         }
 
-        if(button.id === 'CE'){
+        else if(button.id === 'CE'){
+            displayResult.innerText = ''
             currentCalc = []
             displayCurrentCalc.innerText = currentCalc
+            firstNumber = undefined
+            secondNumber = undefined
         }
 
         else if(button.className === "number"){
@@ -29,70 +31,82 @@ buttons.forEach(function(button){
         }
 
         else if(button.className === "operator" || button.className === "tertiary operator"){
-            currentCalc.push(actualNumbers)
+            if(typeof(currentCalc[currentCalc.length - 1]) !== Number){
+                currentCalc.push(displayResult.innerText)
+            }
             currentCalc.push(button.id)
         
             if(firstNumber === undefined){
-                firstNumber = actualNumbers
+                firstNumber = displayResult.innerText
+                displayResult.innerText = ''
             }
 
             else {
-                secondNumber = actualNumbers
-                let result
+                secondNumber = displayResult.innerText
                 firstNumber  = parseFloat(firstNumber)
                 secondNumber = parseFloat(secondNumber)
                 
-
-                if (button.id === '+'){
-                    console.log('entrei no +')
+                if (currentCalc[currentCalc.length -3] === '+'){
                     result = (firstNumber + secondNumber)
                 }
-                if (button.id === '-'){
+                if (currentCalc[currentCalc.length -3] === '-'){
                     result = (firstNumber - secondNumber)
                 }
-                if (button.id === '*'){
+                if (currentCalc[currentCalc.length -3] === '*'){
                     result = (firstNumber * secondNumber)
                 }
-                if (button.id === '/'){
+                if (currentCalc[currentCalc.length -3] === '/'){
                     result = (firstNumber / secondNumber)
                 }
-                if (button.id === '%'){
+                if (currentCalc[currentCalc.length -3] === '%'){
                     result = (firstNumber % secondNumber)
                 }
 
-                // switch(button.id){
-                //     case '+' :
-                //         console.log('entrei no +')
-                //         return result = (firstNumber + secondNumber);
-                //     case '-' :
-                //         console.log('entrei no -')
-                //         return result = (firstNumber - secondNumber);
-                //     case '*' :
-                //         console.log('entrei no *')
-                //         return result = (firstNumber * secondNumber);
-                //     case '/' :
-                //         console.log('entrei no /')
-                //         return result = (firstNumber / secondNumber);
-                //     case '%' :
-                //         console.log('entrei no %')
-                //         return result = (firstNumber % secondNumber);
-        
-                // }
-                console.log('passou aqui')
-                console.log(result)
-                firstNumber = secondNumber.toString()
+                firstNumber = result.toString()
                 secondNumber = undefined
+                displayResult.innerText = ''
             }
-            console.log(firstNumber,secondNumber)
-            displayCurrentCalc.innerText = currentCalc.join('')
-            displayResult.innerText = ''
-            console.log(currentCalc)
         }
+
+        else if(button.id === "=") {
+
+                secondNumber = displayResult.innerText
+                currentCalc.push(secondNumber)
+                displayResult.innerText = ''
+
+                firstNumber  = parseFloat(firstNumber)
+                secondNumber = parseFloat(secondNumber)
+
+                if (currentCalc[currentCalc.length -2] === '+'){
+                    console.log("entrou no +")
+                    result = (firstNumber + secondNumber)
+                }
+
+                else if (currentCalc[currentCalc.length -2] === '-'){
+                    console.log("entrou no -")
+                    result = (firstNumber - secondNumber)
+                }
+
+                else if (currentCalc[currentCalc.length -2] === '/'){
+                    console.log("entrou no /")
+                    result = (firstNumber / secondNumber)
+                }
+                
+                else if (currentCalc[currentCalc.length -2] === '*'){
+                    result = (firstNumber * secondNumber)
+                }
+
+                else if (currentCalc[currentCalc.length -2] === '%'){
+                    result = (firstNumber % secondNumber)
+                }
+                currentCalc.push(button.id)
+                currentCalc.push(result)
+                firstNumber = result.toString()
+                secondNumber = undefined
+                displayResult.innerText = result.toString()
+        }
+
+        displayCurrentCalc.innerText = currentCalc.join(' ')
         console.log(`Botão ${button.id} clicado`)
     })
 })
-
-
-// buttons.addEventListener('click', function(){
-
-// })
